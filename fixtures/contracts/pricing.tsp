@@ -28,6 +28,10 @@ namespace Pricing {
     designatedAt: utcDateTime;
   }
 
+  interface Events {
+    op onSellingPriceDesignated(payload: SellingPriceDesignated): void;
+  }
+
   /**
    * Consumers tolerate unknown fields; additive changes do not break them.
    */

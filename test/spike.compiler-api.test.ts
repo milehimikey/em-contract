@@ -53,7 +53,8 @@ describe("compiler-API spike: contract + binding in one program", () => {
       "SellingPriceDesignated",
       "SellingPrices",
     ]);
-    expect([...pricing.interfaces.keys()].sort()).toEqual(["Commands", "Views"]);
+    // Events joined in em#446 — one `op on<Event>(payload)` per public event.
+    expect([...pricing.interfaces.keys()].sort()).toEqual(["Commands", "Events", "Views"]);
     for (const m of pricing.models.values()) {
       expect(fileOf(m)).toMatch(/contracts\/pricing\.tsp$/);
     }
