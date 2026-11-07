@@ -56,10 +56,16 @@ describe("contractNames mirrors em api generate naming", () => {
     const names = contractNames(loadDoc("pricing-export.json"));
     const contract = readFileSync(fixture("contracts/pricing.tsp"), "utf8");
     expect(contract).toContain(`namespace ${names.namespace} {`);
-    for (const name of [...names.eventModel.values(), ...names.viewModel.values(), ...names.typeModel.values()]) {
+    for (const name of [
+      ...names.eventModel.values(),
+      ...names.viewModel.values(),
+      ...names.typeModel.values(),
+      ...names.commandModel.values(), // payload models, em#445
+    ]) {
       expect(contract).toContain(`model ${name} {`);
     }
     expect(names.typeModel.size).toBe(1); // Money is reachable from the surface
+    expect([...names.commandModel.values()]).toEqual(["DesignateSellingPrice"]);
   });
 
   it("order-fulfillment: matches em's committed example contract", () => {

@@ -41,8 +41,17 @@ namespace Pricing {
     op getSellingPrices(): SellingPrices;
   }
 
-  interface Commands {
+  /**
+   * Consumers tolerate unknown fields; additive changes do not break them.
+   */
+  model DesignateSellingPrice {
     /** INV-PRC-1: a product carries at most one active selling price per currency */
-    op designateSellingPrice(priceId: Uuid, productId: Uuid, price: Money): void;
+    priceId: Uuid;
+    productId: Uuid;
+    price: Money;
+  }
+
+  interface Commands {
+    op designateSellingPrice(payload: DesignateSellingPrice): void;
   }
 }

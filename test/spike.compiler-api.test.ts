@@ -46,7 +46,13 @@ describe("compiler-API spike: contract + binding in one program", () => {
   });
 
   it("enumerates the contract's declarations and attributes them to the contract file", () => {
-    expect([...pricing.models.keys()].sort()).toEqual(["Money", "SellingPriceDesignated", "SellingPrices"]);
+    // DesignateSellingPrice is the command's payload model (em#445, contracts from em ≥ 1.22).
+    expect([...pricing.models.keys()].sort()).toEqual([
+      "DesignateSellingPrice",
+      "Money",
+      "SellingPriceDesignated",
+      "SellingPrices",
+    ]);
     expect([...pricing.interfaces.keys()].sort()).toEqual(["Commands", "Views"]);
     for (const m of pricing.models.values()) {
       expect(fileOf(m)).toMatch(/contracts\/pricing\.tsp$/);

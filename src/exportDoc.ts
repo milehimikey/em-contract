@@ -132,12 +132,15 @@ export interface ContractNames {
   viewModel: Map<string, string>;
   /** declared-type ref -> emitted `model` name (reachable types only). */
   typeModel: Map<string, string>;
+  /** command ref -> emitted payload `model` name (em#445, contracts from em ≥ 1.22). */
+  commandModel: Map<string, string>;
 }
 
 /**
  * Replicates `buildApiContract`'s naming sequence so augment targets resolve against the
  * committed contract: reachable declared types claim names first (in model.types order),
- * then public events, then public views, all through one shared dedupe set.
+ * then public events, then public views, then command payload models (em#445), all through
+ * one shared dedupe set.
  */
 export function contractNames(doc: ExportDoc): ContractNames {
   const surface = publicSurfaceOf(doc.model.slices);
@@ -163,6 +166,8 @@ export function contractNames(doc: ExportDoc): ContractNames {
   for (const el of surface.events) eventModel.set(el.ref, dedupe(pascalCase(el.name), usedNames, "_"));
   const viewModel = new Map<string, string>();
   for (const el of surface.views) viewModel.set(el.ref, dedupe(pascalCase(el.name), usedNames, "_"));
+  const commandModel = new Map<string, string>();
+  for (const el of surface.commands) commandModel.set(el.ref, dedupe(pascalCase(el.name), usedNames, "_"));
 
-  return { namespace: pascalCase(doc.model.name ?? "Model"), eventModel, viewModel, typeModel };
+  return { namespace: pascalCase(doc.model.name ?? "Model"), eventModel, viewModel, typeModel, commandModel };
 }
