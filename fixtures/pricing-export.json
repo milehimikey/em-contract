@@ -1,0 +1,772 @@
+{
+  "schemaVersion": "1.20",
+  "generator": {
+    "name": "@milehimikey/em",
+    "version": "1.21.0"
+  },
+  "source": {
+    "path": "../em-contract/fixtures/pricing.em",
+    "sha256": "efeb6788c267deda46b125a61e02edffb07e459bfe42a6538997a3d76794b438"
+  },
+  "model": {
+    "name": "Pricing",
+    "key": "pricing",
+    "owner": [],
+    "personas": [
+      "Pricing Admin"
+    ],
+    "contexts": [
+      "Pricing"
+    ],
+    "hasAutomation": false,
+    "version": {
+      "design": null,
+      "certified": null
+    },
+    "types": [
+      {
+        "ref": "types/money",
+        "name": "Money",
+        "line": 15,
+        "fields": [
+          {
+            "name": "amount",
+            "type": "decimal",
+            "typeRef": null,
+            "tag": false,
+            "renamedFrom": null,
+            "assigned": false,
+            "derived": false,
+            "derivedFrom": null,
+            "collection": false,
+            "optional": false
+          },
+          {
+            "name": "currency",
+            "type": "string",
+            "typeRef": null,
+            "tag": false,
+            "renamedFrom": null,
+            "assigned": false,
+            "derived": false,
+            "derivedFrom": null,
+            "collection": false,
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "slices": [
+      {
+        "key": "designate-selling-price",
+        "name": "Designate Selling Price",
+        "index": 0,
+        "source": null,
+        "storyline": null,
+        "line": 20,
+        "pattern": "state-change",
+        "doc": {
+          "found": false,
+          "path": "slices/designate-selling-price.md",
+          "reason": "no-doc-bound",
+          "status": null,
+          "version": null,
+          "implementedIn": null,
+          "splitFrom": null,
+          "mergedFrom": [],
+          "supersededBy": [],
+          "driftSignal": null,
+          "reviewedBy": null,
+          "reviewedOn": null,
+          "ratifiedBy": null,
+          "ratifiedOn": null,
+          "ratifiedRef": null,
+          "ratifiedHash": null,
+          "shipped": null,
+          "owner": null,
+          "tracking": null,
+          "conformedVersion": null,
+          "conformedAt": null,
+          "conformedOn": null,
+          "meaningConfirmed": false,
+          "contractChange": null,
+          "reviewSkipped": null,
+          "scenarios": null,
+          "queuedForNext": 0
+        },
+        "continuationOf": null,
+        "alsoReads": [],
+        "elements": [
+          {
+            "ref": "designate-selling-price/ui.price-entry",
+            "kind": "ui",
+            "name": "Price Entry",
+            "line": 21,
+            "fields": null,
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": "Pricing Admin",
+            "context": null,
+            "again": false,
+            "public": false,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          },
+          {
+            "ref": "designate-selling-price/command.designate-selling-price",
+            "kind": "command",
+            "name": "Designate Selling Price",
+            "line": 22,
+            "fields": [
+              {
+                "name": "priceId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "productId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "price",
+                "type": "Money",
+                "typeRef": {
+                  "name": "Money",
+                  "ref": "types/money",
+                  "array": false
+                },
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              }
+            ],
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": null,
+            "context": null,
+            "again": false,
+            "public": true,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": [
+              {
+                "id": "INV-PRC-1",
+                "rule": "a product carries at most one active selling price per currency"
+              }
+            ]
+          },
+          {
+            "ref": "designate-selling-price/event.selling-price-designated",
+            "kind": "event",
+            "name": "Selling Price Designated",
+            "line": 28,
+            "fields": [
+              {
+                "name": "priceId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": true,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "productId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": true,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "price",
+                "type": "Money",
+                "typeRef": {
+                  "name": "Money",
+                  "ref": "types/money",
+                  "array": false
+                },
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "designatedAt",
+                "type": "datetime",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": true,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              }
+            ],
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": null,
+            "context": "Pricing",
+            "again": false,
+            "public": true,
+            "tags": [
+              {
+                "key": "priceId",
+                "kind": "identity",
+                "fields": [
+                  "priceId"
+                ],
+                "description": null
+              },
+              {
+                "key": "productId",
+                "kind": "identity",
+                "fields": [
+                  "productId"
+                ],
+                "description": null
+              },
+              {
+                "key": "productPrice",
+                "kind": "composite",
+                "fields": [
+                  "productId",
+                  "priceId"
+                ],
+                "description": null
+              },
+              {
+                "key": "priceRuleHash",
+                "kind": "external",
+                "fields": null,
+                "description": "hash of rule kind+source+target, order-independent"
+              }
+            ],
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          }
+        ]
+      },
+      {
+        "key": "audit-price-changes",
+        "name": "Audit Price Changes",
+        "index": 1,
+        "source": null,
+        "storyline": null,
+        "line": 38,
+        "pattern": "state-change",
+        "doc": {
+          "found": false,
+          "path": "slices/audit-price-changes.md",
+          "reason": "no-doc-bound",
+          "status": null,
+          "version": null,
+          "implementedIn": null,
+          "splitFrom": null,
+          "mergedFrom": [],
+          "supersededBy": [],
+          "driftSignal": null,
+          "reviewedBy": null,
+          "reviewedOn": null,
+          "ratifiedBy": null,
+          "ratifiedOn": null,
+          "ratifiedRef": null,
+          "ratifiedHash": null,
+          "shipped": null,
+          "owner": null,
+          "tracking": null,
+          "conformedVersion": null,
+          "conformedAt": null,
+          "conformedOn": null,
+          "meaningConfirmed": false,
+          "contractChange": null,
+          "reviewSkipped": null,
+          "scenarios": null,
+          "queuedForNext": 0
+        },
+        "continuationOf": null,
+        "alsoReads": [],
+        "elements": [
+          {
+            "ref": "audit-price-changes/ui.audit-entry",
+            "kind": "ui",
+            "name": "Audit Entry",
+            "line": 39,
+            "fields": null,
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": "Pricing Admin",
+            "context": null,
+            "again": false,
+            "public": false,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          },
+          {
+            "ref": "audit-price-changes/command.record-price-audit",
+            "kind": "command",
+            "name": "Record Price Audit",
+            "line": 40,
+            "fields": [
+              {
+                "name": "auditId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "priceId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              }
+            ],
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": null,
+            "context": null,
+            "again": false,
+            "public": false,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          },
+          {
+            "ref": "audit-price-changes/event.price-audit-recorded",
+            "kind": "event",
+            "name": "Price Audit Recorded",
+            "line": 45,
+            "fields": [
+              {
+                "name": "auditId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": true,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "priceId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              }
+            ],
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": null,
+            "context": "Pricing",
+            "again": false,
+            "public": false,
+            "tags": [
+              {
+                "key": "auditId",
+                "kind": "identity",
+                "fields": [
+                  "auditId"
+                ],
+                "description": null
+              }
+            ],
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          }
+        ]
+      },
+      {
+        "key": "review-audit-log",
+        "name": "Review Audit Log",
+        "index": 2,
+        "source": null,
+        "storyline": null,
+        "line": 51,
+        "pattern": "state-view",
+        "doc": {
+          "found": false,
+          "path": "slices/review-audit-log.md",
+          "reason": "no-doc-bound",
+          "status": null,
+          "version": null,
+          "implementedIn": null,
+          "splitFrom": null,
+          "mergedFrom": [],
+          "supersededBy": [],
+          "driftSignal": null,
+          "reviewedBy": null,
+          "reviewedOn": null,
+          "ratifiedBy": null,
+          "ratifiedOn": null,
+          "ratifiedRef": null,
+          "ratifiedHash": null,
+          "shipped": null,
+          "owner": null,
+          "tracking": null,
+          "conformedVersion": null,
+          "conformedAt": null,
+          "conformedOn": null,
+          "meaningConfirmed": false,
+          "contractChange": null,
+          "reviewSkipped": null,
+          "scenarios": null,
+          "queuedForNext": 0
+        },
+        "continuationOf": null,
+        "alsoReads": [],
+        "elements": [
+          {
+            "ref": "review-audit-log/view.price-audit-log",
+            "kind": "view",
+            "name": "Price Audit Log",
+            "line": 52,
+            "fields": [
+              {
+                "name": "auditId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "priceId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              }
+            ],
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": [
+              {
+                "name": "Price Audit Recorded",
+                "ref": "audit-price-changes/event.price-audit-recorded"
+              }
+            ],
+            "updatesFrom": null,
+            "persona": null,
+            "context": null,
+            "again": false,
+            "public": false,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          },
+          {
+            "ref": "review-audit-log/ui.audit-log-screen",
+            "kind": "ui",
+            "name": "Audit Log Screen",
+            "line": 56,
+            "fields": null,
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": "Pricing Admin",
+            "context": null,
+            "again": false,
+            "public": false,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          }
+        ]
+      },
+      {
+        "key": "view-selling-prices",
+        "name": "View Selling Prices",
+        "index": 3,
+        "source": null,
+        "storyline": null,
+        "line": 59,
+        "pattern": "state-view",
+        "doc": {
+          "found": false,
+          "path": "slices/view-selling-prices.md",
+          "reason": "no-doc-bound",
+          "status": null,
+          "version": null,
+          "implementedIn": null,
+          "splitFrom": null,
+          "mergedFrom": [],
+          "supersededBy": [],
+          "driftSignal": null,
+          "reviewedBy": null,
+          "reviewedOn": null,
+          "ratifiedBy": null,
+          "ratifiedOn": null,
+          "ratifiedRef": null,
+          "ratifiedHash": null,
+          "shipped": null,
+          "owner": null,
+          "tracking": null,
+          "conformedVersion": null,
+          "conformedAt": null,
+          "conformedOn": null,
+          "meaningConfirmed": false,
+          "contractChange": null,
+          "reviewSkipped": null,
+          "scenarios": null,
+          "queuedForNext": 0
+        },
+        "continuationOf": null,
+        "alsoReads": [],
+        "elements": [
+          {
+            "ref": "view-selling-prices/view.selling-prices",
+            "kind": "view",
+            "name": "Selling Prices",
+            "line": 60,
+            "fields": [
+              {
+                "name": "priceId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "productId",
+                "type": "uuid",
+                "typeRef": null,
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              },
+              {
+                "name": "price",
+                "type": "Money",
+                "typeRef": {
+                  "name": "Money",
+                  "ref": "types/money",
+                  "array": false
+                },
+                "tag": false,
+                "renamedFrom": null,
+                "assigned": false,
+                "derived": false,
+                "derivedFrom": null,
+                "collection": false,
+                "optional": false
+              }
+            ],
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": [
+              {
+                "name": "Selling Price Designated",
+                "ref": "designate-selling-price/event.selling-price-designated"
+              }
+            ],
+            "updatesFrom": null,
+            "persona": null,
+            "context": null,
+            "again": false,
+            "public": true,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          },
+          {
+            "ref": "view-selling-prices/ui.price-list",
+            "kind": "ui",
+            "name": "Price List",
+            "line": 65,
+            "fields": null,
+            "note": null,
+            "issue": null,
+            "divergence": null,
+            "from": null,
+            "updatesFrom": null,
+            "persona": "Pricing Admin",
+            "context": null,
+            "again": false,
+            "public": false,
+            "tags": null,
+            "renamedFrom": null,
+            "logicalRef": null,
+            "alternativeGroup": null,
+            "loopsTo": null,
+            "consumes": null,
+            "invariants": null
+          }
+        ]
+      }
+    ],
+    "storylines": [],
+    "storylineEdges": [],
+    "arrows": [],
+    "edges": [
+      {
+        "from": "designate-selling-price/ui.price-entry",
+        "to": "designate-selling-price/command.designate-selling-price",
+        "source": "pattern"
+      },
+      {
+        "from": "designate-selling-price/command.designate-selling-price",
+        "to": "designate-selling-price/event.selling-price-designated",
+        "source": "pattern"
+      },
+      {
+        "from": "audit-price-changes/ui.audit-entry",
+        "to": "audit-price-changes/command.record-price-audit",
+        "source": "pattern"
+      },
+      {
+        "from": "audit-price-changes/command.record-price-audit",
+        "to": "audit-price-changes/event.price-audit-recorded",
+        "source": "pattern"
+      },
+      {
+        "from": "review-audit-log/view.price-audit-log",
+        "to": "review-audit-log/ui.audit-log-screen",
+        "source": "pattern"
+      },
+      {
+        "from": "view-selling-prices/view.selling-prices",
+        "to": "view-selling-prices/ui.price-list",
+        "source": "pattern"
+      },
+      {
+        "from": "audit-price-changes/event.price-audit-recorded",
+        "to": "review-audit-log/view.price-audit-log",
+        "source": "from"
+      },
+      {
+        "from": "designate-selling-price/event.selling-price-designated",
+        "to": "view-selling-prices/view.selling-prices",
+        "source": "from"
+      }
+    ]
+  },
+  "diagnostics": []
+}
