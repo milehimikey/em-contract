@@ -25,6 +25,14 @@
   },
   "license": "MIT",
   "author": "milehimikey",
+  "homepage": "https://github.com/milehimikey/em-contract#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milehimikey/em-contract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/milehimikey/em-contract/issues"
+  },
   "keywords": [
     "event-modeling",
     "typespec",
