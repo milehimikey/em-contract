@@ -2,11 +2,13 @@
 // The subset of em's `em export` JSON document (exportSchemaVersion "1.x") that em-contract
 // reads, plus the public-surface walk and the emitted-name computation.
 //
-// SEAM (em#448): once `em api surface --json` ships, this module should consume that document
-// instead of the full export — em then owns the notion of "public surface" and we stop
-// re-implementing `publicSurfaceOf`. Until then the walk below mirrors em's
-// src/emit/api.ts `publicSurfaceOf` and `buildApiContract`'s naming sequence exactly
-// (verified against em 1.21.0); any divergence is a bug here, not in em.
+// SEAM (em#448): `em api surface --json` shipped (src/surfaceDoc.ts consumes it), but its
+// schema 1.0 drops the event-level `tags` array — so this export path remains the
+// full-fidelity input until the em#448 follow-up lands, and the walk below keeps mirroring
+// em's src/emit/api.ts `publicSurfaceOf` and `buildApiContract` naming exactly (verified
+// against em main 2026-11-07); any divergence is a bug here, not in em.
+
+import { AugmentSource } from "./augment.js";
 
 export interface FieldExport {
   name: string;
@@ -170,4 +172,45 @@ export function contractNames(doc: ExportDoc): ContractNames {
   for (const el of surface.commands) commandModel.set(el.ref, dedupe(pascalCase(el.name), usedNames, "_"));
 
   return { namespace: pascalCase(doc.model.name ?? "Model"), eventModel, viewModel, typeModel, commandModel };
+}
+
+/** Normalize an export document into augment's input (full tag fidelity). */
+export function fromExportDoc(doc: ExportDoc): AugmentSource {
+  const surface = publicSurfaceOf(doc.model.slices);
+  const typesByRef = new Map(doc.model.types.map((t) => [t.ref, t]));
+
+  const reachable = new Set<string>();
+  const walk = (fields: FieldExport[] | null) => {
+    for (const f of fields ?? []) {
+      if (f.typeRef && !reachable.has(f.typeRef.ref)) {
+        reachable.add(f.typeRef.ref);
+        walk(typesByRef.get(f.typeRef.ref)?.fields ?? null);
+      }
+    }
+  };
+  for (const el of [...surface.commands, ...surface.events, ...surface.views]) walk(el.fields);
+
+  const warnings: string[] = [];
+  for (const slice of doc.model.slices) {
+    for (const el of slice.elements) {
+      if (el.kind === "event" && !el.public && (el.tags ?? []).length > 0) {
+        warnings.push(
+          `event "${el.name}" carries DCB tags but is not public — it is not in the contract, no augment emitted (mark it \`public\` in the model to bind it)`,
+        );
+      }
+    }
+  }
+
+  return {
+    sourceName: doc.source.path.split("/").pop() ?? doc.source.path,
+    schemaLabel: `em export schema ${doc.schemaVersion}`,
+    namespace: pascalCase(doc.model.name ?? "Model"),
+    typeNames: doc.model.types.filter((t) => reachable.has(t.ref)).map((t) => t.name),
+    events: surface.events.map((el) => ({
+      name: el.name,
+      tags: el.tags ?? [],
+      assignedFields: (el.fields ?? []).filter((f) => f.assigned).map((f) => f.name),
+    })),
+    warnings,
+  };
 }

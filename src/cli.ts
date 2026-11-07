@@ -8,11 +8,11 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
-import { buildAugment } from "./augment.js";
+import { buildAugment, type AugmentSource } from "./augment.js";
 import { buildBindingScaffold } from "./bindInit.js";
 import { runBindCheck, type BindCheckResult } from "./bindCheck.js";
 import { EM_CONTRACT_HEADER, loadContract } from "./contractInfo.js";
-import { readExportDoc } from "./exportDoc.js";
+import { readAugmentInput } from "./inputDoc.js";
 
 export const VERSION: string = JSON.parse(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "package.json"), "utf8"),
@@ -27,7 +27,10 @@ program
 
 program
   .command("augment")
-  .argument("<export.json>", "an `em export` document (produce it with: em export <model>.em -o export.json)")
+  .argument(
+    "<doc.json>",
+    "an `em export` document (full DCB-tag fidelity) or an `em api surface --json` document — detected by schema",
+  )
   .description(
     "emit an augment-decorator file for the model's generated contract: DCB identity tags become " +
       "@@correlationId/@@header candidates, composite/external tags and `assigned` fields become notes",
@@ -36,14 +39,14 @@ program
   .option("--active", "emit decorator lines active instead of commented-out candidates", false)
   .option("--contract <path>", "relative path to the generated .tsp, emitted as an import line")
   .action((file: string, opts: { out?: string; active: boolean; contract?: string }) => {
-    let doc;
+    let src: AugmentSource;
     try {
-      doc = readExportDoc(readFileSync(file, "utf8"), file);
+      src = readAugmentInput(readFileSync(file, "utf8"), file);
     } catch (e) {
       process.stderr.write(`error: ${(e as Error).message}\n`);
       process.exit(1);
     }
-    const { text, warnings } = buildAugment(doc, { active: opts.active, contractImport: opts.contract ?? null });
+    const { text, warnings } = buildAugment(src, { active: opts.active, contractImport: opts.contract ?? null });
     for (const w of warnings) process.stderr.write(`warn: ${w}\n`);
     if (opts.out) {
       mkdirSync(dirname(opts.out), { recursive: true });

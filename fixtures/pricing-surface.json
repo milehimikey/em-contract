@@ -1,0 +1,205 @@
+{
+  "apiSurfaceSchemaVersion": "1.0",
+  "generator": {
+    "name": "@milehimikey/em",
+    "version": "1.21.0"
+  },
+  "file": "fixtures/pricing.em",
+  "modelKey": "pricing",
+  "commands": [
+    {
+      "name": "Designate Selling Price",
+      "slug": "designate-selling-price",
+      "fields": [
+        {
+          "name": "priceId",
+          "type": {
+            "kind": "scalar",
+            "scalar": "uuid",
+            "tsType": "Uuid",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "productId",
+          "type": {
+            "kind": "scalar",
+            "scalar": "uuid",
+            "tsType": "Uuid",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "price",
+          "type": {
+            "kind": "declared",
+            "scalar": null,
+            "tsType": "Money",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        }
+      ],
+      "invariants": [
+        {
+          "id": "INV-PRC-1",
+          "rule": "a product carries at most one active selling price per currency"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Selling Price Designated",
+      "slug": "selling-price-designated",
+      "fields": [
+        {
+          "name": "priceId",
+          "type": {
+            "kind": "scalar",
+            "scalar": "uuid",
+            "tsType": "Uuid",
+            "array": false
+          },
+          "optional": false,
+          "tag": true,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "productId",
+          "type": {
+            "kind": "scalar",
+            "scalar": "uuid",
+            "tsType": "Uuid",
+            "array": false
+          },
+          "optional": false,
+          "tag": true,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "price",
+          "type": {
+            "kind": "declared",
+            "scalar": null,
+            "tsType": "Money",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "designatedAt",
+          "type": {
+            "kind": "scalar",
+            "scalar": "datetime",
+            "tsType": "utcDateTime",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": true,
+          "renamedFrom": null
+        }
+      ],
+      "invariants": null
+    }
+  ],
+  "views": [
+    {
+      "name": "Selling Prices",
+      "slug": "selling-prices",
+      "fields": [
+        {
+          "name": "priceId",
+          "type": {
+            "kind": "scalar",
+            "scalar": "uuid",
+            "tsType": "Uuid",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "productId",
+          "type": {
+            "kind": "scalar",
+            "scalar": "uuid",
+            "tsType": "Uuid",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "price",
+          "type": {
+            "kind": "declared",
+            "scalar": null,
+            "tsType": "Money",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        }
+      ],
+      "invariants": null
+    }
+  ],
+  "types": [
+    {
+      "name": "Money",
+      "slug": "money",
+      "fields": [
+        {
+          "name": "amount",
+          "type": {
+            "kind": "scalar",
+            "scalar": "decimal",
+            "tsType": "decimal",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        },
+        {
+          "name": "currency",
+          "type": {
+            "kind": "scalar",
+            "scalar": "string",
+            "tsType": "string",
+            "array": false
+          },
+          "optional": false,
+          "tag": false,
+          "assigned": false,
+          "renamedFrom": null
+        }
+      ]
+    }
+  ]
+}

@@ -104,16 +104,22 @@ the model's async metadata — the part of a binding that is mechanically deriva
 model rather than authored.
 
 ```bash
-# 1. in your model repo (or anywhere em runs)
-em export models/pricing/pricing.em -o pricing-export.json
+# 1. in your model repo (or anywhere em runs) — either document works, detected by schema:
+em export models/pricing/pricing.em -o pricing.json          # full DCB-tag fidelity
+em api surface models/pricing/pricing.em --json > pricing.json   # em ≥ 1.22 (em#448)
 
 # 2. generate candidates (commented out — review, then activate)
-em-contract augment pricing-export.json
+em-contract augment pricing.json
 
 # 3. or generate live decorators wired into a binding project
-em-contract augment pricing-export.json --active \
+em-contract augment pricing.json --active \
   --contract ./contract.tsp -o api/augments.tsp
 ```
+
+**Input fidelity**: the `em api surface` document (schema 1.0) carries field-level identity
+flags but not composite/external DCB tags — augment derives identity candidates and says so
+on stderr. The `em export` document carries all three tag kinds; prefer it until the em#448
+follow-up adds the `tags` array to the surface schema.
 
 | Flag | Effect |
 |---|---|
@@ -242,13 +248,20 @@ npm run typecheck
 - `src/bindInit.ts` — the pure scaffold builder (`buildBindingScaffold`).
 - `src/bindCheck.ts` — the bind-check engine (`runBindCheck`): findings + augment inventory.
 - `src/cli.ts` — commander wiring only.
-- `fixtures/` — committed `em export` / `em api generate` output (em 1.21.0, export schema
-  1.20) with regeneration commands in `fixtures/README.md`; tests never require em.
+- `src/inputDoc.ts` / `src/exportDoc.ts` / `src/surfaceDoc.ts` — augment's two input
+  documents, detected by schema discriminator and normalized to one `AugmentSource`.
+- `fixtures/` — committed em output with regeneration commands in `fixtures/README.md`;
+  golden tests never shell out to em.
+- `vendor/` — a tarball of em main packed 2026-11-07 (version string still 1.21.0; content
+  is the 1.22-to-be line incl. `api surface`), installed as the `@milehimikey/em`
+  devDependency so one integration test runs the real em binary against augment. Swap for
+  the npm release once em 1.22.0 ships.
 - `test/golden/` — byte-exact expected augment outputs.
 - `test/spike.compiler-api.test.ts` — the compiler-API spike, kept alive as tests.
 
-When em 1.22 Wave 1 regenerates contract shapes (#444/#445/#446), regenerate `fixtures/` and
-`test/golden/` in one pass; the naming tests will catch any emitter naming change.
+The fixtures already reflect the full 1.22 contract shape (#444/#445/#446); any future
+emitter change regenerates `fixtures/` and `test/golden/` in one pass, and the naming tests
+catch emitter naming drift.
 
 ## License
 

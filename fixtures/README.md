@@ -17,6 +17,9 @@ cp examples/order-fulfillment/contracts/order-fulfillment.tsp ../em-contract/fix
   tagged-but-internal event (augment's warning path).
 - `order-fulfillment-export.json` / `contracts/order-fulfillment.tsp` — em's real example
   (assigned fields, no tags).
+- `pricing-surface.json` — `em api surface --json` output (apiSurfaceSchemaVersion 1.0),
+  generated with the vendored em-main tarball:
+  `node node_modules/@milehimikey/em/dist/cli.js api surface fixtures/pricing.em --json > fixtures/pricing-surface.json`
 - `spike/` — hand-authored binding + entry point for the compiler-API spike
   (see `docs/spike-compiler-api.md`).
 - `bindings/` — bind-check cases: `good.tsp` (honest), `shadow.tsp` (re-declared contract
