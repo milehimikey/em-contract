@@ -1,6 +1,6 @@
 {
   "name": "@milehimikey/em-contract",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeSpec intelligence for em-generated contracts: scaffold and verify binding files, generate augment-decorator files from event-model metadata. em ships interface-as-data; em-contract owns the TypeSpec side.",
   "type": "module",
   "bin": {

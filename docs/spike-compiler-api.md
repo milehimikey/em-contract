@@ -48,15 +48,15 @@ and the `@correlationId`/`@header` augments land on the contract's properties.
   concentrates in emitter-framework APIs, which this tool does not use. Pinning exact
   (1.17.0) plus the living spike test means a bump that breaks us fails loudly in CI.
 
-## What this unlocks (deferred seams)
+## What this unlocked (built 2026-11-07, after em 1.22 Wave 1 merged)
 
-- **`bind check`** (waits on em 1.22 Wave 1, #445/#446): compile contract + binding, then
-  (a) every explicit decorator application in the binding resolves onto a contract
-  declaration — enumerable as shown; (b) binding-declared ops reference contract payload
-  models rather than re-declaring shapes — detectable by walking binding ops' parameter/return
-  types and flagging binding-file models that structurally shadow contract models;
-  (c) compile errors themselves are the first-class drift signal (a removed contract field
-  breaks the augment's target path). The drift-check sample requested from the em#443
-  reporter should calibrate rule (b).
-- **`bind init`** (same wait): scaffold `main.tsp` + `binding.tsp` + `tspconfig.yaml` around
-  a contract path — pure templating; the spike shows nothing blocks it.
+Both commands now exist on exactly the groundwork above — `src/bindCheck.ts` and
+`src/bindInit.ts`, tested in `test/bind.test.ts`:
+
+- **`bind check`**: (a) every explicit decorator application in the binding resolves onto a
+  contract declaration — reported as the augment inventory; (b) binding-file models that
+  structurally shadow contract models raise `shadow-model` (exact field-set match,
+  deliberately conservative until the em#443 reporter's drift-check sample calibrates it);
+  (c) compile errors are the first-class drift signal (`compile-error` findings).
+- **`bind init`**: compiles the contract via `src/contractInfo.ts` and scaffolds
+  `binding.tsp` + `tspconfig.yaml` from its real declarations.

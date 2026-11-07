@@ -19,6 +19,8 @@ cp examples/order-fulfillment/contracts/order-fulfillment.tsp ../em-contract/fix
   (assigned fields, no tags).
 - `spike/` — hand-authored binding + entry point for the compiler-API spike
   (see `docs/spike-compiler-api.md`).
+- `bindings/` — bind-check cases: `good.tsp` (honest), `shadow.tsp` (re-declared contract
+  shape → warning), `broken.tsp` (augment target the contract no longer has → error).
 
 When the remaining Wave 1 emitters (#445/#446) change the contract shape, regenerate
 everything here plus `test/golden/` in one pass. (#444's regen landed 2026-11-07 with no
