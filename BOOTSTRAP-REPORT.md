@@ -57,11 +57,10 @@ absorbed into README.md + docs/ and deleted.
 
 ## Open questions for the owner
 
-1. **GitHub remote** — not created, nothing pushed (per KICKOFF this is your call). Repo is
-   committed locally on `main`; say the word and I'll create `milehimikey/em-contract` and
-   push.
-2. **Publish intent** — package.json is publish-shaped (files/bin/prepublishOnly) but has no
-   `repository`/`homepage` fields until the remote exists. npm scope: keep `em-contract`
+1. ~~**GitHub remote**~~ — resolved 2026-11-07: owner approved; public repo
+   https://github.com/milehimikey/em-contract created and `main` pushed.
+2. **Publish intent** — package.json is publish-shaped (files/bin/prepublishOnly) and now
+   carries `repository`/`homepage`/`bugs`. npm scope still open: keep `em-contract`
    unscoped like em-sdd-bridge, or `@milehimikey/em-contract`?
 3. **Correlation rule above** (decision 2) — right default for the day-job prototype
    workflow behind em#443, or should `--active` take a per-event choice flag before anyone
