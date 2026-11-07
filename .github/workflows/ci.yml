@@ -1,0 +1,25 @@
+name: CI
+
+# Build + typecheck + test on every push/PR. The test suite includes the living
+# compiler-API spike (test/spike.compiler-api.test.ts) — @typespec/compiler is pinned
+# exact, so a deliberate bump that breaks the pre-1.0 emitter-adjacent surface fails
+# here loudly instead of surfacing downstream in bind check.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm test
