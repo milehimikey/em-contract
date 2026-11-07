@@ -1,0 +1,47 @@
+{
+  "name": "em-contract",
+  "version": "0.1.0",
+  "description": "TypeSpec intelligence for em-generated contracts: scaffold and verify binding files, generate augment-decorator files from event-model metadata. em ships interface-as-data; em-contract owns the TypeSpec side.",
+  "type": "module",
+  "bin": {
+    "em-contract": "dist/cli.js"
+  },
+  "main": "./dist/cli.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.test.json",
+    "prepublishOnly": "npm run build && npm run typecheck && npm test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "milehimikey",
+  "keywords": [
+    "event-modeling",
+    "typespec",
+    "contract",
+    "asyncapi",
+    "openapi",
+    "em"
+  ],
+  "dependencies": {
+    "@typespec/compiler": "1.17.0",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "typespec-asyncapi": "0.2.0",
+    "vitest": "^5.0.3"
+  }
+}
