@@ -24,8 +24,9 @@ absorbed into README.md + docs/ and deleted.
 
 ## Decisions taken (not in KICKOFF, flagging for review)
 
-1. **Package name `em-contract`, unscoped** — matches sibling `em-sdd-bridge` (unscoped),
-   not em itself (`@milehimikey/em`). Trivial to flip before any publish.
+1. **Package name** — bootstrapped unscoped; owner ruled 2026-11-07:
+   **`@milehimikey/em-contract`** (scoped like em itself, `publishConfig.access: public`).
+   The bin stays `em-contract`.
 2. **Correlation rule**: every identity-tag field → `@@header` candidate; the event's
    *first* identity tag also → `@@correlationId` (AsyncAPI allows one correlationId per
    message; typespec-asyncapi's idiom is `@header @correlationId` on the same field).
@@ -59,9 +60,9 @@ absorbed into README.md + docs/ and deleted.
 
 1. ~~**GitHub remote**~~ — resolved 2026-11-07: owner approved; public repo
    https://github.com/milehimikey/em-contract created and `main` pushed.
-2. **Publish intent** — package.json is publish-shaped (files/bin/prepublishOnly) and now
-   carries `repository`/`homepage`/`bugs`. npm scope still open: keep `em-contract`
-   unscoped like em-sdd-bridge, or `@milehimikey/em-contract`?
+2. ~~**Publish intent / npm scope**~~ — resolved 2026-11-07: **`@milehimikey/em-contract`**,
+   `publishConfig.access: public`. Actually publishing a first version to npm remains a
+   separate owner call.
 3. **Correlation rule above** (decision 2) — right default for the day-job prototype
    workflow behind em#443, or should `--active` take a per-event choice flag before anyone
    depends on it?

@@ -1,5 +1,5 @@
 {
-  "name": "em-contract",
+  "name": "@milehimikey/em-contract",
   "version": "0.1.0",
   "description": "TypeSpec intelligence for em-generated contracts: scaffold and verify binding files, generate augment-decorator files from event-model metadata. em ships interface-as-data; em-contract owns the TypeSpec side.",
   "type": "module",
@@ -25,6 +25,9 @@
   },
   "license": "MIT",
   "author": "milehimikey",
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/milehimikey/em-contract#readme",
   "repository": {
     "type": "git",
