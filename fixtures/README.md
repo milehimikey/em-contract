@@ -1,7 +1,9 @@
 # Fixtures
 
-Committed `em export` / `em api generate` output (em 1.21.0, export schemaVersion 1.20) —
-tests must not depend on having em installed. Regenerate from the em repo root:
+Committed `em export` / `em api generate` output — tests must not depend on having em
+installed. Exports: schemaVersion 1.20 (em 1.21.0). Contracts: regenerated 2026-11-07 from
+em main post-#444 (formatted scalars — `@format("uuid") scalar Uuid`); regenerate again when
+#445/#446 merge. From the em repo root:
 
 ```bash
 npx tsx src/cli.ts export ../em-contract/fixtures/pricing.em -o ../em-contract/fixtures/pricing-export.json
@@ -18,5 +20,6 @@ cp examples/order-fulfillment/contracts/order-fulfillment.tsp ../em-contract/fix
 - `spike/` — hand-authored binding + entry point for the compiler-API spike
   (see `docs/spike-compiler-api.md`).
 
-When em 1.22 Wave 1 (#444/#445/#446) changes the contract shape, regenerate everything here
-plus `test/golden/` in one pass.
+When the remaining Wave 1 emitters (#445/#446) change the contract shape, regenerate
+everything here plus `test/golden/` in one pass. (#444's regen landed 2026-11-07 with no
+golden changes — augment targets don't carry field types.)

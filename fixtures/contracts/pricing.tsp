@@ -3,6 +3,8 @@
 // Scope: the model's `public` commands (write API), events (async) and views (read API).
 
 namespace Pricing {
+  @format("uuid") scalar Uuid extends string;
+
   /**
    * Consumers tolerate unknown fields; additive changes do not break them.
    */
@@ -18,9 +20,9 @@ namespace Pricing {
    */
   model SellingPriceDesignated {
     /** DCB identity tag */
-    priceId: string;
+    priceId: Uuid;
     /** DCB identity tag */
-    productId: string;
+    productId: Uuid;
     price: Money;
     /** system-assigned — not supplied by the triggering command */
     designatedAt: utcDateTime;
@@ -30,8 +32,8 @@ namespace Pricing {
    * Consumers tolerate unknown fields; additive changes do not break them.
    */
   model SellingPrices {
-    priceId: string;
-    productId: string;
+    priceId: Uuid;
+    productId: Uuid;
     price: Money;
   }
 
@@ -41,6 +43,6 @@ namespace Pricing {
 
   interface Commands {
     /** INV-PRC-1: a product carries at most one active selling price per currency */
-    op designateSellingPrice(priceId: string, productId: string, price: Money): void;
+    op designateSellingPrice(priceId: Uuid, productId: Uuid, price: Money): void;
   }
 }
