@@ -100,8 +100,8 @@ describe("augment from em api surface --json (em#448)", () => {
     );
   });
 
-  it("live: the vendored em main binary's surface output feeds augment byte-identically", async () => {
-    // Pins the real integration: em (packed from main, vendor/) must keep emitting
+  it("live: the real em binary's surface output feeds augment byte-identically", async () => {
+    // Pins the real integration: em (the exact-pinned devDependency) must keep emitting
     // apiSurfaceSchemaVersion 1.x that this reader accepts.
     const { execFile } = await import("node:child_process");
     const { promisify } = await import("node:util");
