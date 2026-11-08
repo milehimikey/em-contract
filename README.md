@@ -252,10 +252,9 @@ npm run typecheck
   documents, detected by schema discriminator and normalized to one `AugmentSource`.
 - `fixtures/` — committed em output with regeneration commands in `fixtures/README.md`;
   golden tests never shell out to em.
-- `vendor/` — a tarball of em main packed 2026-11-07 (version string still 1.21.0; content
-  is the 1.22-to-be line incl. `api surface`), installed as the `@milehimikey/em`
-  devDependency so one integration test runs the real em binary against augment. Swap for
-  the npm release once em 1.22.0 ships.
+- `@milehimikey/em` (devDependency, exact-pinned) — one integration test runs the real em
+  binary's `api surface --json` against augment, pinning `apiSurfaceSchemaVersion` 1.x
+  end-to-end.
 - `test/golden/` — byte-exact expected augment outputs.
 - `test/spike.compiler-api.test.ts` — the compiler-API spike, kept alive as tests.
 
